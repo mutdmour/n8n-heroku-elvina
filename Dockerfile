@@ -21,7 +21,7 @@ RUN apk --update add --virtual build-dependencies python2 python3 build-base && 
 	apk --update add git && \
 	apk del build-dependencies
 
-RUN N8N_CORE_BRANCH=feature/n8n-2853-templates-fe-all-pages-ready && \
+RUN N8N_CORE_BRANCH=master && \
     git clone https://github.com/n8n-io/n8n && \
 	cd n8n && \
     echo $N8N_CORE_BRANCH && \
@@ -29,9 +29,9 @@ RUN N8N_CORE_BRANCH=feature/n8n-2853-templates-fe-all-pages-ready && \
     git checkout $N8N_CORE_BRANCH && \
 	npm install -g typescript && \
 	npm install -g lerna && \
-	npm install && \
-	lerna bootstrap --hoist && \
-	npm_config_user=root npm run build 
+    lerna bootstrap --hoist
+
+RUN npm_config_user=root npm run build 
 
 # Specifying work directory
 WORKDIR /data
